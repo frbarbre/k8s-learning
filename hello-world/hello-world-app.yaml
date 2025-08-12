@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-hello-app
+  labels:
+    app: my-hello-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: my-hello-app
+  template:
+    metadata:
+      labels:
+        app: my-hello-app
+    spec:
+      containers:
+      - name: hello
+        image: my-hello-app:latest
+        imagePullPolicy: Never  # ← This tells k8s to use local image
+        ports:
+        - containerPort: 3000
+        env:
+        - name: MESSAGE
+          value: "Hello from Kubernetes with my local image!"
+        - name: NEXT_PUBLIC_MESSAGE
+          value: "Hello from Kubernetes Client with my local image!"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-hello-service
+spec:
+  selector:
+    app: my-hello-app
+  ports:
+  - port: 80
+    targetPort: 3000
+  type: LoadBalancer
