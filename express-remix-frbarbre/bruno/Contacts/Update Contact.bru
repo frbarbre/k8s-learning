@@ -1,0 +1,24 @@
+meta {
+  name: Update Contact
+  type: http
+  seq: 5
+}
+
+put {
+  url: {{app_url}}/api/contacts/67a5d14991750246a7f19e5c
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{auth_token}}
+}
+
+body:json {
+  {
+    "avatar": "https://example.com/new-avatar.jpg",
+    "first": "Andreas",
+    "last": "Barbre",
+    "twitter": "@frederikbarbre"
+  }
+}

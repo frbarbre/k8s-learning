@@ -1,0 +1,19 @@
+meta {
+  name: Toggle Favorite
+  type: http
+  seq: 7
+}
+
+post {
+  url: {{app_url}}/api/contacts/{{contact_id}}/favorite
+  body: none
+  auth: bearer
+}
+
+headers {
+  Authorization: {{auth_token}}
+}
+
+auth:bearer {
+  token: {{auth_token}}
+}

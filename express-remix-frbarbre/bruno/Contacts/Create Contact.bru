@@ -1,0 +1,29 @@
+meta {
+  name: Create Contact
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{app_url}}/api/contacts
+  body: json
+  auth: bearer
+}
+
+headers {
+  Authorization: {{auth_token}}
+}
+
+auth:bearer {
+  token: {{auth_token}}
+}
+
+body:json {
+  {
+    "avatar": "https://example.com/avatar.jpg",
+    "first": "%20",
+    "last": "Doe",
+    "twitter": "@marydoe",
+    "test": "hello"
+  }
+}

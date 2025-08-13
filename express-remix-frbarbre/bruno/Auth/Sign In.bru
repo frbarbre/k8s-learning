@@ -1,0 +1,18 @@
+meta {
+  name: Sign In
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{app_url}}/api/auth/signin
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "email": "fr.barbre@gmail.com",
+    "password": "password123"
+  }
+}

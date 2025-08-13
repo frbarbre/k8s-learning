@@ -1,0 +1,76 @@
+services:
+  node_contacts:
+    build:
+      context: ./node
+      dockerfile: Dockerfile.dev
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./node/.env
+    depends_on:
+      mongodb_contacts:
+        condition: service_healthy
+    networks:
+      - contacts_network
+    volumes:
+      - ./node:/usr/src/app
+      - /usr/src/app/node_modules
+
+  mongodb_contacts:
+    image: mongo:latest
+    container_name: mongodb_contacts
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${DB_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${DB_PASSWORD}
+      MONGO_INITDB_DATABASE: ${DB_NAME}
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_contacts_data:/data/db
+    networks:
+      - contacts_network
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 3s
+      timeout: 5s
+      retries: 5
+
+  django_contacts:
+    build:
+      context: ./django
+      dockerfile: Dockerfile
+    ports:
+      - "8001:8000"
+    environment:
+      - DOCKER_ENV=true
+    env_file:
+      - ./django/.env
+    depends_on:
+      mongodb_contacts:
+        condition: service_healthy
+    networks:
+      - contacts_network
+    volumes:
+      - ./django:/usr/src/app
+
+  go_contacts:
+    build:
+      context: ./go
+      dockerfile: Dockerfile
+    ports:
+      - "8002:8000"
+    env_file:
+      - ./go/.env
+    depends_on:
+      mongodb_contacts:
+        condition: service_healthy
+    networks:
+      - contacts_network
+
+volumes:
+  mongodb_contacts_data:
+
+networks:
+  contacts_network:
+    driver: bridge

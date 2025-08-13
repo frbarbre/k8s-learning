@@ -1,0 +1,19 @@
+meta {
+  name: Get All Contacts
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{app_url}}/api/contacts
+  body: none
+  auth: bearer
+}
+
+headers {
+  Authorization: {{auth_token}}
+}
+
+auth:bearer {
+  token: {{auth_token}}
+}
