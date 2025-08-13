@@ -1,0 +1,5 @@
+.env
+.env.local
+deploy.sh
+update.sh
+node_modules

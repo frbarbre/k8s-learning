@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "contacts-mongo-api",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

@@ -1,0 +1,20 @@
+meta {
+  name: Create Contact
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{app_url}}/api/contacts
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "avatar": "https://example.com/avatar.jpg",
+    "first": "Frederik",
+    "last": "Barbre",
+    "twitter": "@frederikbarbre"
+  }
+}

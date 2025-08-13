@@ -5,14 +5,14 @@ async function getData() {
     const res = await fetch(`${process.env.API_URL}/api/hello`);
     if (!res.ok) {
       console.log(res);
-      return null;
+      return { error: "The response was invalid", response: res };
     }
 
     const result = res.json();
     return result;
   } catch (error) {
     console.log(error);
-    return null;
+    return { error: "An Error Occured", message: error };
   }
 }
 
