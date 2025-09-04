@@ -2,7 +2,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: api-service
+  name: frontend-service
   annotations:
     ingress.kubernetes.io/ssl-redirect: "false"
 spec:
@@ -13,6 +13,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: api-service
+                name: frontend-service
                 port:
-                  number: 80
+                  number: 3000

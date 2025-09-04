@@ -17,8 +17,7 @@ spec:
     spec:
       containers:
         - name: hello-api
-          image: my-hello-api:latest
-          imagePullPolicy: Never
+          image: ghcr.io/frbarbre/k8s-learning/k8s-learning/hello-world/api:main
           ports:
             - containerPort: 8000
           env:
@@ -57,8 +56,7 @@ spec:
     spec:
       containers:
         - name: hello
-          image: my-hello-app:latest
-          imagePullPolicy: Never
+          image: ghcr.io/frbarbre/k8s-learning/k8s-learning/hello-world/app:main
           ports:
             - containerPort: 3000
           env:
@@ -69,7 +67,6 @@ spec:
             - name: API_URL
               value: "http://api-service:8000" # ← Now uses service name
 ---
-# Frontend Service (LoadBalancer - Externally accessible)
 apiVersion: v1
 kind: Service
 metadata:
@@ -78,6 +75,6 @@ spec:
   selector:
     app: frontend
   ports:
-    - port: 80
+    - port: 3000
       targetPort: 3000
   type: ClusterIP
